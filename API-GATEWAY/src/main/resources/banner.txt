@@ -1,0 +1,15 @@
+
+       _      ________  ____         ____         _   __________ __________ ____              ___  _  ____     ___       ________         _        ____   ___    __  __________ ___      ___________
+      dM.     `MMMMMMMb.`MM'        6MMMMb/      dM.  MMMMMMMMMM `MMMMMMMMM `Mb(      db      )d' dM. `MM(     )M'       `MMMMMMMb.      dM.      6MMMMb/ `MM    d'  @`MMMMMMMMM `MM\     `M'`MMMMMMMb.
+     ,MMb      MM    `Mb MM        8P    YM     ,MMb  /   MM   \  MM      \  YM.     ,PM.     ,P ,MMb  `MM.    d'         MM    `Mb     ,MMb     8P    YM  MM   d'    MM      \  MMM\     M  MM    `Mb
+     d'YM.     MM     MM MM       6M      Y     d'YM.     MM      MM         `Mb     d'Mb     d' d'YM.  `MM.  d'          MM     MM     d'YM.   6M      Y  MM  d'     MM         M\MM\    M  MM     MM
+    ,P `Mb     MM     MM MM       MM           ,P `Mb     MM      MM    ,     YM.   ,P YM.   ,P ,P `Mb   `MM d'           MM    .M9    ,P `Mb   MM         MM d'      MM    ,    M \MM\   M  MM     MM
+    d'  YM.    MM    .M9 MM       MM           d'  YM.    MM      MMMMMMM     `Mb   d' `Mb   d' d'  YM.   `MM'            MMMMMMM(     d'  YM.  MM         MMd'       MMMMMMM    M  \MM\  M  MM     MM
+   ,P   `Mb    MMMMMMM9' MM       MM     ___  ,P   `Mb    MM      MM    `      YM. ,P   YM. ,P ,P   `Mb    MM             MM    `Mb   ,P   `Mb  MM         MMYM.      MM    `    M   \MM\ M  MM     MM
+   d'    YM.   MM        MM       MM     `M'  d'    YM.   MM      MM           `Mb d'   `Mb d' d'    YM.   MM             MM     MM   d'    YM. MM         MM YM.     MM         M    \MM\M  MM     MM
+  ,MMMMMMMMb   MM        MM       YM      M  ,MMMMMMMMb   MM      MM            YM,P     YM,P ,MMMMMMMMb   MM             MM     MM  ,MMMMMMMMb YM      6  MM  YM.    MM         M     \MMM  MM     MM
+  d'      YM.  MM        MM        8b    d9  d'      YM.  MM      MM      /     `MM'     `MM' d'      YM.  MM             MM    .M9  d'      YM. 8b    d9  MM   YM.   MM      /  M      \MM  MM    .M9
+_dM_     _dMM__MM_      _MM_        YMMMM9 _dM_     _dMM__MM_    _MMMMMMMMM      YP       YP_dM_     _dMM__MM_           _MMMMMMM9'_dM_     _dMM_ YMMMM9  _MM_   YM.__MMMMMMMMM _M_      \M _MMMMMMM9'
+
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}

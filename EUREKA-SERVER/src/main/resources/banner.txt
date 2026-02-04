@@ -1,0 +1,15 @@
+
+__________ ____     ___________    __________ ___    __         _              ____  __________ ________  ____     ___ __________ ________
+`MMMMMMMMM `MM'     `M'`MMMMMMMb.  `MMMMMMMMM `MM    d'  @      dM.            6MMMMb\`MMMMMMMMM `MMMMMMMb.`Mb(     )d' `MMMMMMMMM `MMMMMMMb.
+ MM      \  MM       M  MM    `Mb   MM      \  MM   d'        ,MMb           6M'    ` MM      \  MM    `Mb YM.     ,P   MM      \  MM    `Mb
+ MM         MM       M  MM     MM   MM         MM  d'         d'YM.          MM       MM         MM     MM `Mb     d'   MM         MM     MM
+ MM    ,    MM       M  MM     MM   MM    ,    MM d'         ,P `Mb          YM.      MM    ,    MM     MM  YM.   ,P    MM    ,    MM     MM
+ MMMMMMM    MM       M  MM    .M9   MMMMMMM    MMd'          d'  YM.          YMMMMb  MMMMMMM    MM    .M9  `Mb   d'    MMMMMMM    MM    .M9
+ MM    `    MM       M  MMMMMMM9'   MM    `    MMYM.        ,P   `Mb              `Mb MM    `    MMMMMMM9'   YM. ,P     MM    `    MMMMMMM9'
+ MM         MM       M  MM  \M\     MM         MM YM.       d'    YM.              MM MM         MM  \M\     `Mb d'     MM         MM  \M\
+ MM         YM       M  MM   \M\    MM         MM  YM.     ,MMMMMMMMb              MM MM         MM   \M\     YM,P      MM         MM   \M\
+ MM      /   8b     d8  MM    \M\   MM      /  MM   YM.    d'      YM.       L    ,M9 MM      /  MM    \M\    `MM'      MM      /  MM    \M\
+_MMMMMMMMM    YMMMMM9  _MM_    \M\__MMMMMMMMM _MM_   YM.__dM_     _dMM_      MYMMMM9 _MMMMMMMMM _MM_    \M\_   YP      _MMMMMMMMM _MM_    \M\_
+
+${application.title} ${application.version}
+Powered by Spring Boot ${spring-boot.version}
