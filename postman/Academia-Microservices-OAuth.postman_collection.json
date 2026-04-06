@@ -1,0 +1,206 @@
+{
+  "info": {
+    "_postman_id": "8f8b9f43-2aa2-4d67-a805-53fc2a31ca22",
+    "name": "Academia Microservices OAuth",
+    "description": "Coleccion para autenticar con OAuth2 (client_credentials) y consumir USER-SERVICE y COURSE-SERVICE a traves del API Gateway.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth - Obtener Token (client_credentials)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "grant_type",
+              "value": "client_credentials",
+              "type": "text"
+            },
+            {
+              "key": "scope",
+              "value": "api.read api.write",
+              "type": "text"
+            }
+          ]
+        },
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{clientId}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{clientSecret}}",
+              "type": "string"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{oauthBaseUrl}}/oauth2/token",
+          "host": [
+            "{{oauthBaseUrl}}"
+          ],
+          "path": [
+            "oauth2",
+            "token"
+          ]
+        },
+        "description": "Solicita un access token al OAUTH-SERVER usando client_credentials."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status 200', function () {",
+              "  pm.response.to.have.status(200);",
+              "});",
+              "",
+              "var jsonData = pm.response.json();",
+              "pm.collectionVariables.set('accessToken', jsonData.access_token);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users - Listar (GET /api/v1/users)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{gatewayBaseUrl}}/api/v1/users",
+          "host": [
+            "{{gatewayBaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Users - Registrar (POST /api/v1/users/register)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Juan Demo\",\n  \"username\": \"juandemo\",\n  \"password\": \"123456\",\n  \"enabled\": true,\n  \"isAdmin\": false\n}"
+        },
+        "url": {
+          "raw": "{{gatewayBaseUrl}}/api/v1/users/register",
+          "host": [
+            "{{gatewayBaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "users",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Courses - Listar (GET /api/v1/cursos)",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          }
+        ],
+        "url": {
+          "raw": "{{gatewayBaseUrl}}/api/v1/cursos",
+          "host": [
+            "{{gatewayBaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "cursos"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Courses - Crear (POST /api/v1/cursos)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{accessToken}}"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Arquitectura de Microservicios\",\n  \"description\": \"Curso base para patrones cloud\",\n  \"courseCode\": \"ARQ-MSV-001\"\n}"
+        },
+        "url": {
+          "raw": "{{gatewayBaseUrl}}/api/v1/cursos",
+          "host": [
+            "{{gatewayBaseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "cursos"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "gatewayBaseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "oauthBaseUrl",
+      "value": "http://localhost:8090"
+    },
+    {
+      "key": "clientId",
+      "value": "gateway-app"
+    },
+    {
+      "key": "clientSecret",
+      "value": "12345"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ]
+}
