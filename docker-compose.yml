@@ -139,6 +139,10 @@ services:
     environment:
       EUREKA_URL: ${EUREKA_URL:-http://eureka-server:8761/eureka}
       GATEWAY_URL: ${GATEWAY_URL:-localhost}
+      OAUTH_DB_URL: ${OAUTH_DB_URL:-jdbc:postgresql://postgres-db:5432/coursesdb}
+      OAUTH_DB_USER: ${OAUTH_DB_USER:-coursesvc}
+      OAUTH_DB_PASSWORD: ${OAUTH_DB_PASSWORD:-coursesvcpass}
+      OAUTH_DB_DRIVER: ${OAUTH_DB_DRIVER:-org.postgresql.Driver}
     ports:
       - "8090:8090"
     restart: on-failure

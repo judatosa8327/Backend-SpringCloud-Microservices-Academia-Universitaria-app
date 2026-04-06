@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS oauth_rsa_keys (
+    key_id VARCHAR(255) PRIMARY KEY,
+    public_key TEXT NOT NULL,
+    private_key TEXT NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
