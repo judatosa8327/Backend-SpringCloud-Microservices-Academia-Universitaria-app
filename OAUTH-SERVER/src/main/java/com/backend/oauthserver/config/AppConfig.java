@@ -18,7 +18,7 @@ public class AppConfig {
 
     @Bean
     WebClient webClient(WebClient.Builder builder, ReactorLoadBalancerExchangeFilterFunction lbFunction) {
-        return builder.baseUrl("http://USER-SERVICE").filter(lbFunction).build();
+        return builder.baseUrl("http://MSVC-USERS").filter(lbFunction).build();
     }
 
 }

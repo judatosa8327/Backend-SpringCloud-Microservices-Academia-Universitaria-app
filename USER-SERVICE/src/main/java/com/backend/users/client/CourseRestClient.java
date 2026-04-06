@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
         name = "MSVC-COURSES",
-        url = "host.docker.internal:9002",
         path = "/api/v1/cursos"
 )
 public interface CourseRestClient {

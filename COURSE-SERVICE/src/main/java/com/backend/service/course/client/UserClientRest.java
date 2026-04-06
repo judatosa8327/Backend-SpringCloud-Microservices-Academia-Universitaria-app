@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "MSVC-USERS",
-        url = "host.docker.internal:9001",
         path = "/api/v1/users"
 )
 public interface UserClientRest {
