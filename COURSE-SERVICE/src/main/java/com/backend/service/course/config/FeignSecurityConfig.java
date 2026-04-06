@@ -1,21 +1,15 @@
-package com.backend.users.config;
+package com.backend.service.course.config;
 
 import feign.RequestInterceptor;
-import org.springframework.http.HttpHeaders;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
 @Configuration
-public class UserConfig {
-
-    @Bean
-    public ModelMapper modelMapper() {
-        return new ModelMapper();
-    }
+public class FeignSecurityConfig {
 
     @Bean
     public RequestInterceptor oauth2TokenRelayInterceptor() {
@@ -29,5 +23,4 @@ public class UserConfig {
             }
         };
     }
-
 }

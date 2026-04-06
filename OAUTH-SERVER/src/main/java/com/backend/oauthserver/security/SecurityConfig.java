@@ -48,11 +48,10 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
 
     @Value("${config-base-url.endpoint-gateway}")
-    private final String gatewayUrl;
+    private String gatewayUrl;
 
-    public SecurityConfig(PasswordEncoder passwordEncoder, String gatewayUrl) {
+    public SecurityConfig(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
-        this.gatewayUrl = gatewayUrl;
     }
 
 
@@ -120,12 +119,15 @@ public class SecurityConfig {
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
                 .redirectUri(String.format("http://%s:8080/login/oauth2/code/oidc-client"
                         , gatewayUrl))
                 .redirectUri(String.format("http://%s:8080/authorized", gatewayUrl))
                 .postLogoutRedirectUri(String.format("http://%s:8080/", gatewayUrl))
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
+                .scope("api.read")
+                .scope("api.write")
                 .tokenSettings(TokenSettings
                         .builder()
                         .accessTokenTimeToLive(Duration.ofHours(1))

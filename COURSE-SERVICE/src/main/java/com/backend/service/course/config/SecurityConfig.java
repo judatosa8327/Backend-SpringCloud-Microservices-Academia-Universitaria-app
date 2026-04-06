@@ -1,4 +1,4 @@
-package com.backend.users.security;
+package com.backend.service.course.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,27 +6,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
 
     @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasAuthority("SCOPE_api.read")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users/**").hasAuthority("SCOPE_api.write")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/users/**").hasAuthority("SCOPE_api.write")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/users/**").hasAuthority("SCOPE_api.write")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/cursos/**").hasAuthority("SCOPE_api.read")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/cursos/**").hasAuthority("SCOPE_api.write")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/cursos/**").hasAuthority("SCOPE_api.write")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/cursos/**").hasAuthority("SCOPE_api.write")
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()))

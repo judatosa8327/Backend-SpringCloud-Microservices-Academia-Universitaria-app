@@ -134,6 +134,7 @@ Ejemplos:
 El proyecto se ejecuta completamente usando **Docker Compose**:
 
 ```bash
+./mvnw clean package -DskipTests
 docker-compose up --build
 ```
 
@@ -142,6 +143,11 @@ Incluye:
 * Microservicios
 * Bases de datos
 * Networking interno
+
+Variables recomendadas:
+
+1. Copiar `.env.example` a `.env`
+2. Ajustar credenciales/URLs si tu entorno local lo necesita
 
 ---
 

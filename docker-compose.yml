@@ -1,0 +1,154 @@
+services:
+  mysql-db:
+    image: mysql:8.4
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: usersdb
+      MYSQL_USER: usersvc
+      MYSQL_PASSWORD: usersvcpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 20s
+    networks:
+      - microservices-net
+
+  postgres-db:
+    image: postgres:16
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: coursesdb
+      POSTGRES_USER: coursesvc
+      POSTGRES_PASSWORD: coursesvcpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coursesvc -d coursesdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 20s
+    networks:
+      - microservices-net
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservices-net
+
+  eureka-server:
+    build:
+      context: ./EUREKA-SERVER
+      dockerfile: Dockerfile
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-net
+
+  user-service:
+    build:
+      context: ./USER-SERVICE
+      dockerfile: Dockerfile
+    container_name: user-service
+    depends_on:
+      eureka-server:
+        condition: service_started
+      mysql-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+    environment:
+      EUREKA_URL: ${EUREKA_URL:-http://eureka-server:8761/eureka}
+      ZIPKIN_URL: ${ZIPKIN_URL:-http://zipkin:9411/api/v2/spans}
+      OAUTH_JWK_SET_URI: ${OAUTH_JWK_SET_URI:-http://oauth-server:8090/oauth2/jwks}
+      DB_URL: ${USER_DB_URL:-jdbc:mysql://mysql-db:3306/usersdb?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+      DB_USER_NAME: ${USER_DB_USER:-usersvc}
+      DB_PASSWORD: ${USER_DB_PASSWORD:-usersvcpass}
+      DB_DRIVER: ${USER_DB_DRIVER:-com.mysql.cj.jdbc.Driver}
+    ports:
+      - "9001:9001"
+    restart: on-failure
+    networks:
+      - microservices-net
+
+  course-service:
+    build:
+      context: ./COURSE-SERVICE
+      dockerfile: Dockerfile
+    container_name: course-service
+    depends_on:
+      eureka-server:
+        condition: service_started
+      postgres-db:
+        condition: service_healthy
+      zipkin:
+        condition: service_started
+    environment:
+      EUREKA_URL: ${EUREKA_URL:-http://eureka-server:8761/eureka}
+      ZIPKIN_URL: ${ZIPKIN_URL:-http://zipkin:9411/api/v2/spans}
+      OAUTH_JWK_SET_URI: ${OAUTH_JWK_SET_URI:-http://oauth-server:8090/oauth2/jwks}
+      DB_URL: ${COURSE_DB_URL:-jdbc:postgresql://postgres-db:5432/coursesdb}
+      DB_USER_NAME: ${COURSE_DB_USER:-coursesvc}
+      DB_PASSWORD: ${COURSE_DB_PASSWORD:-coursesvcpass}
+      DB_DRIVER: ${COURSE_DB_DRIVER:-org.postgresql.Driver}
+    ports:
+      - "9002:9002"
+    restart: on-failure
+    networks:
+      - microservices-net
+
+  api-gateway:
+    build:
+      context: ./API-GATEWAY
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    depends_on:
+      - eureka-server
+      - user-service
+      - course-service
+    environment:
+      EUREKA_URL: ${EUREKA_URL:-http://eureka-server:8761/eureka}
+    ports:
+      - "8080:8080"
+    restart: on-failure
+    networks:
+      - microservices-net
+
+  oauth-server:
+    build:
+      context: ./OAUTH-SERVER
+      dockerfile: Dockerfile
+    container_name: oauth-server
+    depends_on:
+      - eureka-server
+      - api-gateway
+      - user-service
+    environment:
+      EUREKA_URL: ${EUREKA_URL:-http://eureka-server:8761/eureka}
+      GATEWAY_URL: ${GATEWAY_URL:-localhost}
+    ports:
+      - "8090:8090"
+    restart: on-failure
+    networks:
+      - microservices-net
+
+volumes:
+  mysql_data:
+  postgres_data:
+
+networks:
+  microservices-net:
+    driver: bridge
